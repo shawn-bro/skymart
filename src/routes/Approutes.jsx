@@ -79,7 +79,11 @@ useEffect(() => {
         }
     ]
 }
-    ])
+    ],
+{
+      basename: "/skymart",
+}
+)
  return <RouterProvider router={router}/>
 }
 

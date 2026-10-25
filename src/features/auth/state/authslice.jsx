@@ -1,74 +1,78 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 import { hydratedapi, loginapi, registerapi } from "./authactions";
 
-
-
-export const authsilce = createSlice({
-  name: "auth",
-  initialState : {
+const initialState = {
   login: null,
   isLoading: false,
   isAuthenticated: false,
-},
-reducers: {
+  isHydrated: false,
+};
+
+export const authslice = createSlice({
+  name: "auth",
+  initialState,
+
+  reducers: {
     adduser: (state, action) => {
       state.login = action.payload;
       state.isLoading = false;
-      state.isAuthenticated = false;
+      state.isAuthenticated = true;
     },
 
     removeuser: (state) => {
       state.login = null;
       state.isLoading = false;
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
+      state.isHydrated = true;
     },
+
+    reset: () => initialState,
   },
 
-  extraReducers: (builders) => {
-    builders
+  extraReducers: (builder) => {
+    const setUser = (state, action) => {
+      state.login = action.payload;
+      state.isLoading = false;
+      state.isAuthenticated = true;
+    };
+
+    const clearUser = (state) => {
+      state.login = null;
+      state.isLoading = false;
+      state.isAuthenticated = false;
+    };
+
+    builder
+      // Login
       .addCase(loginapi.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginapi.fulfilled, (state, action) => {
-        state.login = action.payload;
-        state.isLoading = false;
-        state.isAuthenticated = true;
-      })
-      .addCase(loginapi.rejected, (state) => {
-        state.login = null;
-        state.isLoading = false;
-        state.isAuthenticated = false;
-      })
+      .addCase(loginapi.fulfilled, setUser)
+      .addCase(loginapi.rejected, clearUser)
 
+      // Register
       .addCase(registerapi.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerapi.fulfilled, (state, action) => {
-        state.login = action.payload;
-        state.isLoading = false;
-        state.isAuthenticated = true;
-      })
-      .addCase(registerapi.rejected, (state) => {
-        state.login = null;
-        state.isLoading = false;
-        state.isAuthenticated = false;
-      })
+      .addCase(registerapi.fulfilled, setUser)
+      .addCase(registerapi.rejected, clearUser)
 
+      // Check existing login session
       .addCase(hydratedapi.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(hydratedapi.fulfilled, (state, action) => {
-        state.login = action.payload;
-        state.isLoading = false;
-        state.isAuthenticated = true;
+        setUser(state, action);
+        state.isHydrated = true;
       })
       .addCase(hydratedapi.rejected, (state) => {
-        state.login = null;
-        state.isLoading = false;
-        state.isAuthenticated = false;
+        clearUser(state);
+        state.isHydrated = true;
       });
   },
 });
 
-export const { adduser, removeuser, reset } = authsilce.actions;
-export default authsilce.reducer;
+export const { adduser, removeuser, reset } = authslice.actions;
+
+export default authslice.reducer;

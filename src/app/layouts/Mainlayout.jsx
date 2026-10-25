@@ -10,7 +10,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useProduct } from "../../features/Shop/hook/useProduct";
-import { removeuser, reset } from "../../features/auth/state/authslice";
+import { removeuser} from "../../features/auth/state/authslice";
 
 function Mainlayout() {
   const [open, setOpen] = useState(false);
