@@ -1,10 +1,10 @@
 import react, { useState } from "react";
-import { usecart } from "../../../About/hook/usecart";
+import { useCart } from "../../../About/hook/usecart";
 
 
 function ProductCard({ product, onAddToCart }) {
   let [isadded,setisadded] = useState(false);
-  const {addtocart} = usecart();
+  const {addtocart} = useCart();
 
   const {
     id,
