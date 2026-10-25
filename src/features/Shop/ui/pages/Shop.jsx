@@ -3,7 +3,7 @@ import SearchBar from "../components/SearchBar";
 import ProductCard from "../components/ProductCard";
 import CategoryFilter from "../components/CategoryFilter";
 import { useProduct, categoryl } from "../../hook/useProduct";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination";
 
 
 function Shop() {
