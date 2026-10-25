@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { Cartactions } from "../state/Cartaction";
 import { useState } from "react";
 
-export const usecart = () => {
+export const useCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cart, setcart] = useState([]);
