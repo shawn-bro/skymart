@@ -1,5 +1,5 @@
 import react, { useState } from "react";
-import { usecart } from "../../../About/hook/useCart";
+import { usecart } from "../../../About/hook/usecart";
 
 
 function ProductCard({ product, onAddToCart }) {
